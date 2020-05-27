@@ -3,20 +3,34 @@ import axios from "axios";
 import './Styles.css';
 
 export default function App() {
+  const [isReady, setReady] = useState(null);
+  const [breeds, setBreeds] = useState(null);
   const [infos, setInfos] = useState({
     Breed: "",
+    Image: "",
     DogName: "",
     FontFamily: "",
-    FontColor: ""
+    FontColor: ""    
   })
 
-  const handlerBreed = e => {
-    setInfos({
-      ...infos,
-      Breed: e.target.value
-    });
-  };
+  useEffect(() =>{
+    axios.get("https://dog.ceo/api/breeds/list/all")
+    .then(res => setBreeds(Object.keys(res.data.message)));
+  }, []);
 
+  const handlerBreed = e => {
+    const breed = e.target.value
+    axios
+      .get(`https://dog.ceo/api/breed/${breed}/images/random`)
+      .then(res => {
+        setInfos({
+          ...infos,
+          Image: res.data.message,
+          Breed: breed       
+        });
+      });
+  };
+ 
   const handlerDogname = e => {
     setInfos({
       ...infos,
@@ -37,17 +51,23 @@ export default function App() {
       FontColor: e.target.value
     });
   };
+
+  const handleSubmit = () => {
+    setReady(true)
+  };
+ 
   console.log(infos)
 
   return (
     <div className={`${infos.FontColor} ${infos.FontFamily}`}>
       <select onChange={handlerBreed}>
         <option>Select Breed</option>
-        <option value="Akita">Akita</option>
-        <option value="Boxer">Boxer</option>
-        <option value="Beagle">Beagle</option>
-        <option value="Bulldog">Bulldog</option>
-        <option value="Husky">Husky</option>
+        {breeds && 
+          breeds.map((item, key) => (
+            <option key={key} value={item}>
+              {item}
+            </option>
+          ))}
       </select>
       <input onChange={handlerDogname} placeholder="What is the dog name ?" />
       <select onChange={handlerFontfamily}>
@@ -66,7 +86,11 @@ export default function App() {
         <option value="Purple">Purple</option>
         <option value="Yellow">Yellow</option>
       </select>
-      {infos.DogName}
+      <button onClick={handleSubmit}>Save</button>
+      {isReady && <h2>{infos.DogName}</h2>}
+      <div>
+        { isReady && <img alt={infos.Breed} src={infos.Image} /> }
+      </div>
     </div>
   );
 }
