@@ -6,11 +6,11 @@ export default function App() {
   const [isReady, setReady] = useState(null);
   const [breeds, setBreeds] = useState(null);
   const [infos, setInfos] = useState({
-    Breed: "",
-    Image: "",
-    DogName: "",
-    FontFamily: "",
-    FontColor: ""    
+    breed: "",
+    image: "",
+    dogName: "",
+    fontFamily: "",
+    fontColor: ""    
   })
 
   useEffect(() =>{
@@ -18,6 +18,19 @@ export default function App() {
     .then(res => setBreeds(Object.keys(res.data.message)));
   }, []);
 
+  useEffect(() => {
+    const localInfos = JSON.parse(localStorage.getItem('infos'))
+    if (localInfos) {
+      setInfos({
+        breed: localInfos.breed,
+        image: localInfos.image,
+        dogName: localInfos.dogName,
+        fontFamily: localInfos.fontFamily,
+        fontColor: localInfos.fontColor    
+      }) 
+      setReady(true)
+    }
+  }, [infos])
   const handlerBreed = e => {
     const breed = e.target.value
     axios
@@ -25,8 +38,8 @@ export default function App() {
       .then(res => {
         setInfos({
           ...infos,
-          Image: res.data.message,
-          Breed: breed       
+          image: res.data.message,
+          breed: breed       
         });
       });
   };
@@ -34,32 +47,31 @@ export default function App() {
   const handlerDogname = e => {
     setInfos({
       ...infos,
-      DogName: e.target.value
+      dogName: e.target.value
     });
   };
 
   const handlerFontfamily = e => {
     setInfos({
       ...infos,
-      FontFamily: e.target.value
+      fontFamily: e.target.value
     });
   };
 
   const handlerFontcolor = e => {
     setInfos({
       ...infos,
-      FontColor: e.target.value
+      fontColor: e.target.value
     });
   };
 
   const handleSubmit = () => {
     setReady(true)
+    localStorage.setItem("infos", JSON.stringify(infos))
   };
  
-  console.log(infos)
-
   return (
-    <div className={`${infos.FontColor} ${infos.FontFamily}`}>
+    <div className={`${infos.fontColor} ${infos.fontFamily}`}>
       <select onChange={handlerBreed}>
         <option>Select Breed</option>
         {breeds && 
@@ -87,9 +99,9 @@ export default function App() {
         <option value="Yellow">Yellow</option>
       </select>
       <button onClick={handleSubmit}>Save</button>
-      {isReady && <h2>{infos.DogName}</h2>}
+      {isReady && <h2>{infos.dogName}</h2>}
       <div>
-        { isReady && <img alt={infos.Breed} src={infos.Image} /> }
+        { isReady && <img alt={infos.breed} src={infos.image} /> }
       </div>
     </div>
   );
