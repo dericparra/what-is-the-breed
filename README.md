@@ -5,6 +5,7 @@ Aplicação React (usando hooks) consumindo API publica dogCeo
 ## How Start
 
 yarn install
+
 yarn start
 
 ## Considerações finais
