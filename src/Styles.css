@@ -1,3 +1,65 @@
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+  }
+
+form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    background-color: rgb(216, 216, 216);   
+    height: 100vh;    
+}
+
+select {
+    width: 30vh;
+    margin: 5px;
+}
+
+input {
+    width: 30vh;
+    margin: 5px;
+}
+
+button {
+    width: 15vh;
+    margin: 5px;
+    border-top: 1px solid #96d1f8;
+    background: rgb(216, 216, 216);
+    background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+    background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+    background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+    background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+    background: -o-linear-gradient(top, #3e779d, #65a9d7);
+    border-radius: 8px;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: white;
+    text-decoration: none;
+    vertical-align: middle;
+    }
+ button:hover {
+    border-top-color: rgb(201, 201, 201);
+    background:  #fff;
+    color:  rgb(216, 216, 216);
+    }
+ button:active {
+    border-top-color: #1b435e;
+    background: #1b435e;
+    }
+
 .Blue {
     color:blue;
 }

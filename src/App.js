@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './Styles.css';
+import {P, Img, Div} from './styles.js';
+import './styles.css';
 
 export default function App() {
   const [isReady, setReady] = useState(null);
@@ -30,7 +31,8 @@ export default function App() {
       }) 
       setReady(true)
     }
-  }, [infos])
+  }, [isReady])
+
   const handlerBreed = e => {
     const breed = e.target.value
     axios
@@ -71,38 +73,42 @@ export default function App() {
   };
  
   return (
-    <div className={`${infos.fontColor} ${infos.fontFamily}`}>
-      <select onChange={handlerBreed}>
-        <option>Select Breed</option>
-        {breeds && 
-          breeds.map((item, key) => (
-            <option key={key} value={item}>
-              {item}
-            </option>
-          ))}
-      </select>
-      <input onChange={handlerDogname} placeholder="What is the dog name ?" />
-      <select onChange={handlerFontfamily}>
-        <option>Select Font Family</option>
-        <option value="Montserrat">Montserrat</option>
-        <option value="Lato">Lato</option>
-        <option value="Noto">Noto Sans JP</option>
-        <option value="Open">Open Sans</option>
-        <option value="Roboto">Roboto</option>
-      </select>
-      <select onChange={handlerFontcolor}>
-        <option>Selec Font Color</option>
-        <option value="Blue">Blue</option>
-        <option value="Green">Green</option>
-        <option value="Red">Red</option>
-        <option value="Purple">Purple</option>
-        <option value="Yellow">Yellow</option>
-      </select>
-      <button onClick={handleSubmit}>Save</button>
-      {isReady && <h2>{infos.dogName}</h2>}
-      <div>
-        { isReady && <img alt={infos.breed} src={infos.image} /> }
-      </div>
-    </div>
+    <form>
+      <Div>
+        <select onChange={handlerBreed}>
+          <option>Select Breed</option>
+          {breeds && 
+            breeds.map((item, key) => (
+              <option key={key} value={item}>
+                {item}
+              </option>
+            ))}
+        </select>
+        <input onChange={handlerDogname} placeholder="What is the dog name ?" />
+        <select onChange={handlerFontfamily}>
+          <option>Select Font Family</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Lato">Lato</option>
+          <option value="Noto">Noto Sans JP</option>
+          <option value="Open">Open Sans</option>
+          <option value="Roboto">Roboto</option>
+        </select>
+        <select onChange={handlerFontcolor}>
+          <option>Selec Font Color</option>
+          <option value="Blue">Blue</option>
+          <option value="Green">Green</option>
+          <option value="Red">Red</option>
+          <option value="Purple">Purple</option>
+          <option value="Yellow">Yellow</option>
+        </select>  
+        <button onClick={handleSubmit}>Save</button>
+      </Div>
+      {isReady &&
+        <Div className={`${infos.fontColor} ${infos.fontFamily}`}> 
+        <P>{infos.dogName}</P>
+        <Img alt={infos.breed} src={infos.image} /> 
+    </Div>
+    }   
+    </form>
   );
 }
